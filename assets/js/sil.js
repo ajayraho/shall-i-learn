@@ -1,47 +1,74 @@
-window.onload = function() {
-  var input = document.querySelector("#silInput");
-  var button = document.querySelector('#silSubmit');
-  var form = document.querySelector('#silForm');
-  const SHALLILEARN = async function(e) {
+window.onload = function () {
+  const input = document.querySelector("#silInput");
+  const button = document.querySelector("#silSubmit");
+  const form = document.querySelector("#silForm");
+  const linechartDiv = document.getElementById("chart_div");
+  const regionschartDiv = document.getElementById("region_chart_div");
+  function turnOnLoaders(){
+    linechartDiv.innerHTML="Loading...";
+    regionschartDiv.innerHTML="Loading...";
+  }
+  function turnOffLoaders(){
+    linechartDiv.innerHTML="";
+    regionschartDiv.innerHTML="";
+  }
+  const SHALLILEARN = async function (e) {
     e.preventDefault();
-    await fetch('http://127.0.0.1:8000/sil/', {
-      method: 'POST',
+    turnOnLoaders();
+    await fetch("http://127.0.0.1:8000/sil/", {
+      method: "POST",
       headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify({"query":input.value})
-    }).then(async(res)=>{
-      var resp = await res.json()
-      var arr = resp.data.map(i=>[new Date(new Date(i[0]).toDateString()),i[1]])
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+      body: JSON.stringify({ query: input.value }),
+    }).then(async (res) => {
+      turnOffLoaders();
+      var resp = await res.json();
+      google.charts.load("current", { packages: ["corechart", "geochart"] });
+      google.charts.setOnLoadCallback(() => {
+        drawChart();
+        drawRegionsMap();
+      });
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Day', 'Searches'],
-          ...arr
+        var arr = resp.GTPTime.map((i) => [
+          new Date(new Date(i[0]).toDateString()),
+          i[1],
         ]);
-
+        var data = google.visualization.arrayToDataTable([["Day", ""], ...arr]);
         var options = {
-          curveType: 'function',
-          vAxis: {
-        scaleType: 'log'
-  },
+          curveType: "function",
+          hAxis: {
+            format: "yyyy",
+          },
+          legend: { position: "none" },
           animation: {
-            "startup": true,
-            duration: 1000,
-        easing: 'out',
-          }
+            startup: true,
+            duration: 750,
+            easing: "out",
+          },
+          width: 1000,
+          height: 250,
         };
-
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
+        var chart = new google.visualization.LineChart(linechartDiv);
         chart.draw(data, options);
       }
-    })
-  }
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+          ["Country", "Popularity"],
+          ...resp.GTPRegn,
+        ]);
+        var options = {
+          width: 400,
+          height: 300,
+        };
+        var chart = new google.visualization.GeoChart(regionschartDiv);
+        chart.draw(data, options);
+      }
+    });
+  };
   button.onclick = SHALLILEARN;
   form.onsubmit = SHALLILEARN;
-
-}
+};

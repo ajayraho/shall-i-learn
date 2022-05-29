@@ -18,3 +18,11 @@ class GoogleTrendsPovider:
     df['date'] = da
     ls = df[['date', 'value']].values.tolist()
     return ls
+  def getOverRegion(self):
+    pytrend = TrendReq()
+    pytrend.build_payload(kw_list=[self.query])
+    df = pytrend.interest_by_region(resolution='COUNTRY', inc_low_vol=True, inc_geo_code=False)
+    df = df.reset_index()
+    df.rename(columns={df.columns[1]:"value"}, inplace=True)
+    ls = df[['geoName', 'value']].values.tolist()
+    return ls

@@ -16,8 +16,10 @@ async def read_root(request: Request):
 async def sil(info: Request):
     req = await info.json()
     gtprovider = GoogleTrendsPovider(req['query'])
-    ls = gtprovider.getOverTime()
+    GTPTime = gtprovider.getOverTime()
+    GTPRegn = gtprovider.getOverRegion()
     return {
         "req": req,
-        "data": ls
+        "GTPTime": GTPTime,
+        "GTPRegn": GTPRegn
     }
