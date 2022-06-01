@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-class StackOverflowPovider:
+class StackOverflowProvider:
   def __init__(self, query):
     self.query = query
   def getTotalQuestions(self):

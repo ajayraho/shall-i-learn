@@ -5,8 +5,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from providers.gtrends import GoogleTrendsPovider
 from providers.github import GitHubProvider
-from providers.stackoverflow import StackOverflowPovider
-
+from providers.stackoverflow import StackOverflowProvider
+from providers.reddit import RedditProvider
 app = FastAPI()
 
 templates = Jinja2Templates(directory = "templates")
@@ -26,13 +26,17 @@ async def sil(info: Request):
     gitprovider = GitHubProvider(req['query'])
     gitData = gitprovider.getData()
 
-    stackoverflow = StackOverflowPovider(req['query'])
+    stackoverflow = StackOverflowProvider(req['query'])
     stackoverflowTotalQns = stackoverflow.getTotalQuestions()
+    
+    redditprovider = RedditProvider(req['query'])
+    redditCommunities = redditprovider.getCommunities()
 
     return {
         "req": req,
         "GTPTime": GTPTime,
         "GTPRegn": GTPRegn,
         **gitData,
-        **stackoverflowTotalQns
+        **stackoverflowTotalQns,
+        **redditCommunities
     }

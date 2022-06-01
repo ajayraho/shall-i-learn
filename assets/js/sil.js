@@ -7,6 +7,9 @@ window.onload = function () {
   const gitReposDiv = document.getElementById("git_repos");
   const gitTopicsDiv = document.getElementById("git_topics");
   const stackoverflowQuestionsDiv = document.getElementById("stackoverflowQuestions_div");
+  const redditDiv = document.getElementById("reddit_div");
+
+
   function turnOnLoaders(){
     linechartDiv.innerHTML="Loading...";
     regionschartDiv.innerHTML="Loading...";
@@ -81,6 +84,14 @@ window.onload = function () {
 
       //stackoverflow
       stackoverflowQuestionsDiv.innerHTML = "<abbr title='"+resp.questionsCount+"'>"+SILUtilAbbreviate(resp.questionsCount)+"</abbr>";
+    
+      console.log(resp.communities)
+      var reddithtml="<table><tr><td>Community</td><td>Members</td></tr>";
+      for(let i=0; i<resp.communities.length; i++){
+        var coArr = resp.communities[i];
+        reddithtml+="<tr><td><a href=\'https://www.reddit.com"+coArr[2]+"\'>"+coArr[0]+"</a></td><td>"+coArr[1]+"</td></tr>";
+      }
+      redditDiv.innerHTML = reddithtml;
     });
   };
   button.onclick = SHALLILEARN;
