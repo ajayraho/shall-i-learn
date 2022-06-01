@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./assets/css/templatemo.css">
     <link rel="stylesheet" href="./assets/css/custom.css">
     <script src="/assets/js/sil.js" type="text/javascript"></script>
+    <script src="/assets/js/utils.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
@@ -69,9 +70,13 @@
     <section class="container py-5">
         <div style="display:flex;justify-content: center;align-items: center; border:2px solid black;">
         <div id="chart_div"></div></div>
-        <div style="display:flex;justify-content: center;align-items: center; border:2px solid black;">
+        <div style="display:flex;flex-direction: columns;justify-content: center;align-items: center; border:2px solid black;">
             <div id="region_chart_div"></div>
-            <div id="stackoverflow_div">STF</div>
+            <div id="git_div">
+                GitRepos: <div id="git_repos"></div>
+                GitTopics: <div id="git_topics"></div>
+            </div>
+            Stackoverflow Questions: <div id="stackoverflowQuestions_div"></div>
         </div>
         <div class="row justify-content-center my-5">
             <div class="filter-btns shadow-md rounded-pill text-center col-auto">

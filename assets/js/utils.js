@@ -1,0 +1,1 @@
+function SILUtilAbbreviate(e){var r=e;if(e>=1e3){for(var a=Math.floor((""+e).length/3),t="",o=2;o>=1;o--){if(((t=parseFloat((0!=a?e/Math.pow(1e3,a):e).toPrecision(o)))+"").replace(/[^a-zA-Z 0-9]+/g,"").length<=2)break}t%1!=0&&(t=t.toFixed(1)),r=t+["","K","M","B","T"][a]}return r}
