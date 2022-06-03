@@ -8,6 +8,8 @@ window.onload = function () {
   const gitTopicsDiv = document.getElementById("git_topics");
   const stackoverflowQuestionsDiv = document.getElementById("stackoverflowQuestions_div");
   const redditDiv = document.getElementById("reddit_div");
+  const linkedinjobsDiv = document.getElementById("linkedinjobs_div");
+  const linkedinnewjobsDiv = document.getElementById("linkedinnew_div");
 
 
   function turnOnLoaders(){
@@ -16,10 +18,8 @@ window.onload = function () {
     gitReposDiv.innerHTML="Loading...";
     gitTopicsDiv.innerHTML="Loading...";
     stackoverflowQuestionsDiv.innerHTML = "Loading...";
-  }
-  function turnOffLoaders(){
-    linechartDiv.innerHTML="";
-    regionschartDiv.innerHTML="";
+    linkedinjobsDiv.innerHTML = "Loading...";
+    linkedinnewjobsDiv.innerHTML = "Loading...";
   }
   const SHALLILEARN = async function (e) {
     e.preventDefault();
@@ -33,7 +33,6 @@ window.onload = function () {
       },
       body: JSON.stringify({ query: input.value }),
     }).then(async (res) => {
-      turnOffLoaders();
       var resp = await res.json();
       console.log(resp)
       google.charts.load("current", { packages: ["corechart", "geochart"] });
@@ -92,6 +91,10 @@ window.onload = function () {
         reddithtml+="<tr><td><a href=\'https://www.reddit.com"+coArr[2]+"\'>"+coArr[0]+"</a></td><td>"+coArr[1]+"</td></tr>";
       }
       redditDiv.innerHTML = reddithtml;
+      
+      linkedinjobsDiv.innerHTML = SILUtilAbbreviate(resp.liJobs);
+      linkedinnewjobsDiv.innerHTML = SILUtilAbbreviate(resp.liNewJobs);
+
     });
   };
   button.onclick = SHALLILEARN;
