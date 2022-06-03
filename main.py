@@ -7,6 +7,7 @@ from providers.gtrends import GoogleTrendsPovider
 from providers.github import GitHubProvider
 from providers.stackoverflow import StackOverflowProvider
 from providers.reddit import RedditProvider
+from providers.linkedin import LinkedinProvider
 app = FastAPI()
 
 templates = Jinja2Templates(directory = "templates")
@@ -31,6 +32,9 @@ async def sil(info: Request):
     
     redditprovider = RedditProvider(req['query'])
     redditCommunities = redditprovider.getCommunities()
+    
+    linkedinprovider = LinkedinProvider(req['query'])
+    linkedinJobs = linkedinprovider.getJobs()
 
     return {
         "req": req,
@@ -38,5 +42,6 @@ async def sil(info: Request):
         "GTPRegn": GTPRegn,
         **gitData,
         **stackoverflowTotalQns,
-        **redditCommunities
+        **redditCommunities,
+        **linkedinJobs
     }

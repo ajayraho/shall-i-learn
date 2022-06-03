@@ -10,20 +10,25 @@ window.onload = function () {
   const redditDiv = document.getElementById("reddit_div");
   const linkedinjobsDiv = document.getElementById("linkedinjobs_div");
   const linkedinnewjobsDiv = document.getElementById("linkedinnew_div");
+  const SILBody = document.getElementById("SILBody")
 
 
-  function turnOnLoaders(){
-    linechartDiv.innerHTML="Loading...";
-    regionschartDiv.innerHTML="Loading...";
-    gitReposDiv.innerHTML="Loading...";
-    gitTopicsDiv.innerHTML="Loading...";
-    stackoverflowQuestionsDiv.innerHTML = "Loading...";
-    linkedinjobsDiv.innerHTML = "Loading...";
-    linkedinnewjobsDiv.innerHTML = "Loading...";
+  const turnOnLoaders = () => {
+    const loader = "<div class=\"lcon\"><div class=\"lds-ellipsis\"><div></div><div></div><div></div><div></div></div></div>";
+    linechartDiv.innerHTML = loader;
+    regionschartDiv.innerHTML = loader;
+    gitReposDiv.innerHTML = loader;
+    gitTopicsDiv.innerHTML = loader;
+    stackoverflowQuestionsDiv.innerHTML = loader;
+    redditDiv.innerHTML = loader;
+    linkedinjobsDiv.innerHTML = loader;
+    linkedinnewjobsDiv.innerHTML = loader;
   }
   const SHALLILEARN = async function (e) {
     e.preventDefault();
     turnOnLoaders();
+    if(input.value != "") {
+    SILBody.style.display = "block";
     await fetch("http://127.0.0.1:8000/sil/", {
       method: "POST",
       headers: {
@@ -85,18 +90,25 @@ window.onload = function () {
       stackoverflowQuestionsDiv.innerHTML = "<abbr title='"+resp.questionsCount+"'>"+SILUtilAbbreviate(resp.questionsCount)+"</abbr>";
     
       console.log(resp.communities)
-      var reddithtml="<table><tr><td>Community</td><td>Members</td></tr>";
+      var reddithtml="";
       for(let i=0; i<resp.communities.length; i++){
         var coArr = resp.communities[i];
-        reddithtml+="<tr><td><a href=\'https://www.reddit.com"+coArr[2]+"\'>"+coArr[0]+"</a></td><td>"+coArr[1]+"</td></tr>";
+        reddithtml+="<tr><td style=\'width:50%\'><a target=\'_blank\' href=\'https://www.reddit.com"+coArr[2]+"\'>"+coArr[0]+"</a></td><td>"+coArr[1]+"</td></tr>";
       }
       redditDiv.innerHTML = reddithtml;
       
-      linkedinjobsDiv.innerHTML = SILUtilAbbreviate(resp.liJobs);
-      linkedinnewjobsDiv.innerHTML = SILUtilAbbreviate(resp.liNewJobs);
+      linkedinjobsDiv.innerHTML = "<abbr title='"+resp.liJobs+"'>"+SILUtilAbbreviate(resp.liJobs)+"</abbr>";
+      linkedinnewjobsDiv.innerHTML = "<abbr title='"+resp.liNewJobs+"'>"+SILUtilAbbreviate(resp.liNewJobs)+"</abbr>";
 
     });
-  };
+  } else {
+    input.style.border = "1px solid red";
+    setTimeout(() => {
+      input.style.border = "1px solid #ced4da";
+    }, 1000);
+  }
+}
   button.onclick = SHALLILEARN;
   form.onsubmit = SHALLILEARN;
+
 };
