@@ -1,4 +1,4 @@
-html {font-family: 'Open Sans', sans-serif;}
+html {font-family: 'Open Sans', sans-serif;scroll-behavior: smooth;}
 p, a {font-weight: 400;}
 .h2 {font-size: 40px;}
 .h3 {font-size: 28px;}

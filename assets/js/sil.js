@@ -26,10 +26,15 @@ window.onload = function () {
   }
   const SHALLILEARN = async function (e) {
     e.preventDefault();
-    turnOnLoaders();
     if(input.value != "") {
+    turnOnLoaders();
     SILBody.style.display = "block";
-    await fetch("http://127.0.0.1:8000/sil/", {
+    
+    window.scrollTo(0, 450);
+    const serverURL = "https://shallilearn.herokuapp.com/sil/"
+    const localURL = "http://127.0.0.1:8000/sil/"
+    
+    await fetch(localURL, {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
@@ -50,7 +55,7 @@ window.onload = function () {
           new Date(new Date(i[0]).toDateString()),
           i[1],
         ]);
-        var data = google.visualization.arrayToDataTable([["Day", ""], ...arr]);
+        var data = google.visualization.arrayToDataTable([["Day", "Interest"], ...arr]);
         var options = {
           curveType: "function",
           hAxis: {
