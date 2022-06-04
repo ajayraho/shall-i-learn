@@ -8,6 +8,7 @@ from providers.github import GitHubProvider
 from providers.stackoverflow import StackOverflowProvider
 from providers.reddit import RedditProvider
 from providers.linkedin import LinkedinProvider
+from providers.jobs import MiscJobsProvider
 app = FastAPI()
 
 templates = Jinja2Templates(directory = "templates")
@@ -36,6 +37,9 @@ async def sil(info: Request):
     linkedinprovider = LinkedinProvider(req['query'])
     linkedinJobs = linkedinprovider.getJobs()
 
+    miscprovider = MiscJobsProvider(req['query'])
+    miscJobs = miscprovider.getJobs()
+
     return {
         "req": req,
         "GTPTime": GTPTime,
@@ -43,5 +47,6 @@ async def sil(info: Request):
         **gitData,
         **stackoverflowTotalQns,
         **redditCommunities,
-        **linkedinJobs
+        **linkedinJobs,
+        **miscJobs
     }

@@ -10,6 +10,7 @@ window.onload = function () {
   const redditDiv = document.getElementById("reddit_div");
   const linkedinjobsDiv = document.getElementById("linkedinjobs_div");
   const linkedinnewjobsDiv = document.getElementById("linkedinnew_div");
+  const indeedjobsDiv = document.getElementById("indeed_div");
   const SILBody = document.getElementById("SILBody")
 
 
@@ -23,6 +24,7 @@ window.onload = function () {
     redditDiv.innerHTML = loader;
     linkedinjobsDiv.innerHTML = loader;
     linkedinnewjobsDiv.innerHTML = loader;
+    indeedjobsDiv.innerHTML = loader;
   }
   const SHALLILEARN = async function (e) {
     e.preventDefault();
@@ -104,6 +106,8 @@ window.onload = function () {
       
       linkedinjobsDiv.innerHTML = "<abbr title='"+resp.liJobs+"'>"+SILUtilAbbreviate(resp.liJobs)+"</abbr>";
       linkedinnewjobsDiv.innerHTML = "<abbr title='"+resp.liNewJobs+"'>"+SILUtilAbbreviate(resp.liNewJobs)+"</abbr>";
+      
+      indeedjobsDiv.innerHTML = "<abbr title='"+resp.indeedJobs+"'>"+SILUtilAbbreviate(resp.indeedJobs)+"</abbr>";
 
     });
   } else {
