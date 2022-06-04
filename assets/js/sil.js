@@ -34,7 +34,7 @@ window.onload = function () {
     const serverURL = "https://shallilearn.herokuapp.com/sil/"
     const localURL = "http://127.0.0.1:8000/sil/"
     
-    await fetch(localURL, {
+    await fetch(serverURL, {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
