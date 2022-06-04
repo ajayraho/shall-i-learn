@@ -12,5 +12,5 @@ class StackOverflowProvider:
       nq=soup.find_all("div",class_="fs-body3 flex--item fl1 mr12 sm:mr0 sm:mb12")
       count = ''.join(filter(str.isdigit,nq[0].text.strip()))
       return {'questionsCount': count}
-    except:
-      return {'questionsCount': 0}
+    except Exception as e:
+      return {'questionsCount': 0, 'stackoverflowError': str(e)}

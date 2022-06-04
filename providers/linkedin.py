@@ -14,5 +14,5 @@ class LinkedinProvider:
         'liJobs':''.join(filter(str.isdigit,jc[0].text.strip())),
         'liNewJobs':''.join(filter(str.isdigit,nc[0].text.strip()))
       }
-    except:
-      return {'liJobs':0,'liNewJobs':0}
+    except Exception as e:
+      return {'liJobs':0,'liNewJobs':0, 'linkedinError': str(e)}
