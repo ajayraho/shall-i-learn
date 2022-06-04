@@ -13,10 +13,10 @@ class LinkedinProvider:
       soup=BeautifulSoup(req.text,"html.parser")
       html=req.text
       jc=soup.find("span",class_="results-context-header__job-count")
-      nc=soup.find("span",class_="results-context-header__new-jobs")
+      # nc=soup.find("span",class_="results-context-header__new-jobs")
       return {
         'liJobs':''.join(filter(str.isdigit,jc.text.strip())),
-        'liNewJobs':''.join(filter(str.isdigit,nc.text.strip()))
+        # 'liNewJobs':''.join(filter(str.isdigit,nc.text.strip()))
       }
     except Exception as e:
-      return {'liJobs':0,'liNewJobs':0, 'linkedinError': str(e), 'jc':jc, 'nc':nc, 'linkedinhtml':html}
+      return {'liJobs':0,'liNewJobs':0, 'linkedinError': str(e), 'jc':jc, 'linkedinhtml':html}

@@ -1,4 +1,45 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v29/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSGmu1aB.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v29/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v29/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSGmu1aB.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/opensans/v29/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 html {font-family: 'Open Sans', sans-serif;scroll-behavior: smooth;}
+body {overflow-x: hidden;}
 p, a {font-weight: 400;}
 .h2 {font-size: 40px;}
 .h3 {font-size: 28px;}
@@ -47,6 +88,9 @@ footer a.text-light:hover {
   color: #bfbfbf !important;
   transition-duration: 0.15s;
 }
+table {
+  overflow-x: hidden;
+}
 td{
   width: 50%;
 }
@@ -60,12 +104,13 @@ td a {
 .silCard {
   display: flex;
   flex-direction: column;
-  width: 13rem;
+  width: 15rem;
   margin-left: 15px;
   margin-top: 20px;
   border: 1px solid grey;
   border-radius: 5px;
   box-shadow: 9px 14px 12px -18px rgba(0, 0, 0, 0.7);
+  height: fit-content;
 }
 .silCardTitle {
   background-color: #7276ec;
@@ -155,23 +200,28 @@ td a {
 
 /* width */
 ::-webkit-scrollbar {
+  opacity:0;
+  display: none;
   width: 8px;
   border-radius: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
+  opacity:0;
   background: #f1f1f1;
   border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
+  opacity:0;
   background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
+  opacity:0;
   background: #555;
 }
 

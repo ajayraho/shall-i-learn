@@ -9,7 +9,8 @@ window.onload = function () {
   const stackoverflowQuestionsDiv = document.getElementById("stackoverflowQuestions_div");
   const redditDiv = document.getElementById("reddit_div");
   const linkedinjobsDiv = document.getElementById("linkedinjobs_div");
-  const linkedinnewjobsDiv = document.getElementById("linkedinnew_div");
+  const flexjobsDiv = document.getElementById("flexjobs_div");
+  // const linkedinnewjobsDiv = document.getElementById("linkedinnew_div");
   const indeedjobsDiv = document.getElementById("indeed_div");
   const SILBody = document.getElementById("SILBody")
 
@@ -23,8 +24,9 @@ window.onload = function () {
     stackoverflowQuestionsDiv.innerHTML = loader;
     redditDiv.innerHTML = loader;
     linkedinjobsDiv.innerHTML = loader;
-    linkedinnewjobsDiv.innerHTML = loader;
+    //linkedinnewjobsDiv.innerHTML = loader;
     indeedjobsDiv.innerHTML = loader;
+    flexjobsDiv.innerHTML = loader;
   }
   const SHALLILEARN = async function (e) {
     e.preventDefault();
@@ -69,7 +71,6 @@ window.onload = function () {
             duration: 750,
             easing: "out",
           },
-          width: 1000,
           height: 250,
         };
         var chart = new google.visualization.LineChart(linechartDiv);
@@ -82,8 +83,7 @@ window.onload = function () {
           ...resp.GTPRegn,
         ]);
         var options = {
-          width: 400,
-          height: 300,
+          height: 350,
         };
         var chart = new google.visualization.GeoChart(regionschartDiv);
         chart.draw(data, options);
@@ -96,7 +96,6 @@ window.onload = function () {
       //stackoverflow
       stackoverflowQuestionsDiv.innerHTML = "<abbr title='"+resp.questionsCount+"'>"+SILUtilAbbreviate(resp.questionsCount)+"</abbr>";
     
-      console.log(resp.communities)
       var reddithtml="";
       for(let i=0; i<resp.communities.length; i++){
         var coArr = resp.communities[i];
@@ -105,9 +104,11 @@ window.onload = function () {
       redditDiv.innerHTML = reddithtml;
       
       linkedinjobsDiv.innerHTML = "<abbr title='"+resp.liJobs+"'>"+SILUtilAbbreviate(resp.liJobs)+"</abbr>";
-      linkedinnewjobsDiv.innerHTML = "<abbr title='"+resp.liNewJobs+"'>"+SILUtilAbbreviate(resp.liNewJobs)+"</abbr>";
+      //linkedinnewjobsDiv.innerHTML = "<abbr title='"+resp.liNewJobs+"'>"+SILUtilAbbreviate(resp.liNewJobs)+"</abbr>";
       
       indeedjobsDiv.innerHTML = "<abbr title='"+resp.indeedJobs+"'>"+SILUtilAbbreviate(resp.indeedJobs)+"</abbr>";
+      
+      flexjobsDiv.innerHTML = "<abbr title='"+resp.flexJobs+"'>"+SILUtilAbbreviate(resp.flexJobs)+"</abbr>";
 
     });
   } else {
