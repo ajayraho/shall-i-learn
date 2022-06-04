@@ -5,12 +5,25 @@ class GitHubProvider:
     self.query = query
   def getData(self):
     ls = {}
+    rc = 0
     try:
       with urllib.request.urlopen("https://api.github.com/search/repositories?q=language:"+self.query) as url:
         data = json.loads(url.read().decode())
-        ls['repos'] = data['total_count']
+        rc = rc + data['total_count']
     except:
-      ls['repos'] = 0
+      print("Error1")
+      rc = 0
+
+    try:
+      with urllib.request.urlopen("https://api.github.com/search/repositories?q="+self.query) as url:
+        data = json.loads(url.read().decode())
+        rc = rc + data['total_count']
+    except:
+      print("Error2")
+      rc = 0
+
+    ls['repos'] = rc
+
     try:
       with urllib.request.urlopen("https://api.github.com/search/topics?q="+self.query) as url:
         data = json.loads(url.read().decode())
