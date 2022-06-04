@@ -83,7 +83,8 @@ window.onload = function () {
           ...resp.GTPRegn,
         ]);
         var options = {
-          height: 350,
+          width: 400,
+          height: 300
         };
         var chart = new google.visualization.GeoChart(regionschartDiv);
         chart.draw(data, options);
