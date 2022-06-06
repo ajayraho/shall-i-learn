@@ -30,6 +30,7 @@ async def sil(info: Request):
 
     stackoverflow = StackOverflowProvider(req['query'])
     stackoverflowTotalQns = stackoverflow.getTotalQuestions()
+    stackoverflowTagsTime = stackoverflow.getTagsAndTimeDistribution()
     
     redditprovider = RedditProvider(req['query'])
     redditCommunities = redditprovider.getCommunities()
@@ -48,5 +49,6 @@ async def sil(info: Request):
         **stackoverflowTotalQns,
         **redditCommunities,
         **linkedinJobs,
-        **miscJobs
+        **miscJobs,
+        **stackoverflowTagsTime
     }

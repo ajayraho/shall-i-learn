@@ -41,10 +41,10 @@
 		</div>
 	</div>
 
-	<section style="display: none;" id="SILBody" class="container-fluid py-5 px-md-5 ml-md-5">
+	<section style="display:none" id="SILBody" class="container-fluid py-5 px-md-5 ml-md-5">
 		<div class="px-2 px-md-3" style="display:flex; flex-direction: column;">
 			<h5>Google Trends&nbsp;<span style="font-size:0.6rem;">(interest over time)</span></h5>
-			<div style="display:flex;justify-content: center; flex-direction: column; align-items: center;">
+			<div class="mb-4 mt-4" style="display:flex;justify-content: center; flex-direction: column; align-items: center;">
 				<div id="chart_div" style="width: 100%; height: 250px;"></div>
 			</div>
 		</div>
@@ -54,6 +54,24 @@
 					<h5>Around the World</h5>
 				</div>
 					<div id="region_chart_div" style="width: 400px; height: 300px;"></div>
+
+				<div class="d-md-flex align-items-start w-100 w-md-75 mt-5">
+					<h5>Most used tags on Stackoverflow</h5>
+				</div>
+					<div class="row">
+						<div class="col-12 col-md-8 d-flex justify-content-center align-items-center">
+							<div id="tags_chart_div" style="width: 250px; height: 250px;"></div>
+						</div>
+						<div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
+							<table id="tags_legends" style="font-size:0.7rem;margin-top:10px;white-space:nowrap;"></table>
+						</div>
+					</div>
+				<div class="d-md-flex align-items-start w-100 w-md-75 mt-5">
+					<h5>Questions asked within time on Stackoverflow &nbsp;<span style="font-size: 0.5rem;">(first 3k questions)</span></h5>
+				</div>
+				<div class="row" style="width: 300px; height: 300px;">
+					<div id="timeDistribution_div" style="width: 300px; height: 200px;"></div>
+				</div>
 			</div>
 			<div class="col-md-6 px-md-5">
 				<div style="display:flex; justify-items: auto; flex-wrap: wrap;">
@@ -112,7 +130,7 @@
 	<footer class="bg-secondary pt-2">
 		<div class="container">
 			<div class="row py-4">
-				<div class="col-lg-3 col-12 align-left">
+				<div class="col-md-4 col-12 align-left">
 					<a class="navbar-brand" href="index.html">
 						<img style="filter: invert(1);height: 50px;width: 50px;" src="assets/img/sillogo.png" />&nbsp;
 						<span class="text-light h4">shallILearn</span>
@@ -122,7 +140,7 @@
 					</p>
 				</div>
 
-				<div class="col-lg-6 col-md-4 my-sm-0 mt-4 text-light small-md">
+				<div class="col-md-6 my-sm-0 mt-4 text-light small-md">
 					Shall I Learn is a platform which shows the popularity, recent trends of the desired programming technology and the number of jobs in the current market from well known and renowed sources on the internet. 
 				</div>
 				<!-- <div class="col-lg-3 col-md-4 my-sm-0 mt-4 text-light">
