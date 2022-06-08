@@ -229,3 +229,71 @@ abbr {
   border-bottom: none !important;
   text-decoration: none !important;
 }
+
+#errorBox{
+  display: none;
+  opacity: 0;
+  height: 400px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+#errorBox #skullDiv{
+  height: 150px;
+  width: 150px;
+}
+#errTxt{
+  font-size: 0.8rem;
+  padding:10px 20px;
+  border-radius:5px;
+  background-color:#ccc;
+  color:#000;
+  margin-top:20px;
+  width:75vw;
+  max-width:500px;
+  font-family: "Cascadia Code", "Fira Code","Monaco","Consolas","Courier New",Courier,monospace;
+  resize: none;
+}
+pre {
+  font-family: "Cascadia Code", "Fira Code","Monaco","Consolas","Courier New",Courier,monospace;
+  font-size: 0.8rem;
+}
+#skull{
+  height:160px;
+}
+#skull #head{
+  transform:translateY(0);
+  transition-duration:.3s;
+  transition-timing-function:cubic-bezier(.37,1,.5,.99);
+}
+#skull #jaw{
+  transform:translateY(0);
+  transition-duration:.3s;
+  transition-timing-function:cubic-bezier(.37,1,.5,.99);
+}
+#skull #tongue{
+  transform:translateY(0);
+  transition-duration:.3s;
+  transition-timing-function:cubic-bezier(.37,1,.5,.99);
+}
+#skull #shadow{
+  transform:scale(1);
+  transform-origin:50%;
+  transition-duration:.3s;
+  transition-timing-function:cubic-bezier(.37,1,.5,.99);
+}
+#skull #head:hover{
+  transform:translateY(-20px); 
+}
+#skull #jaw:hover{
+  transform: translateY(20px);
+}
+#skull #tongue:hover{
+  transform:translateY(70px); 
+}
+#skull #shadow:hover{
+  transform:scale(1.2)
+}
+#skull #tongue:active{
+  transform:translateY(-20px);
+}

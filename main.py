@@ -15,40 +15,40 @@ templates = Jinja2Templates(directory = "templates")
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 @app.get("/")
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+	return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/sil/")
 async def sil(info: Request):
-    req = await info.json()
+	req = await info.json()
 
-    gtprovider = GoogleTrendsPovider(req['query'])
-    GTPTime = gtprovider.getOverTime()
-    GTPRegn = gtprovider.getOverRegion()
+	gtprovider = GoogleTrendsPovider(req['query'])
+	GTPTime = gtprovider.getOverTime()
+	GTPRegn = gtprovider.getOverRegion()
 
-    gitprovider = GitHubProvider(req['query'])
-    gitData = gitprovider.getData()
+	gitprovider = GitHubProvider(req['query'])
+	gitData = gitprovider.getData()
 
-    stackoverflow = StackOverflowProvider(req['query'])
-    stackoverflowTotalQns = stackoverflow.getTotalQuestions()
-    stackoverflowTagsTime = stackoverflow.getTagsAndTimeDistribution()
-    
-    redditprovider = RedditProvider(req['query'])
-    redditCommunities = redditprovider.getCommunities()
-    
-    linkedinprovider = LinkedinProvider(req['query'])
-    linkedinJobs = linkedinprovider.getJobs()
+	stackoverflow = StackOverflowProvider(req['query'])
+	stackoverflowTotalQns = stackoverflow.getTotalQuestions()
+	stackoverflowTagsTime = stackoverflow.getTagsAndTimeDistribution()
+	
+	redditprovider = RedditProvider(req['query'])
+	redditCommunities = redditprovider.getCommunities()
+	
+	linkedinprovider = LinkedinProvider(req['query'])
+	linkedinJobs = linkedinprovider.getJobs()
 
-    miscprovider = MiscJobsProvider(req['query'])
-    miscJobs = miscprovider.getJobs()
+	miscprovider = MiscJobsProvider(req['query'])
+	miscJobs = miscprovider.getJobs()
 
-    return {
-        "req": req,
-        "GTPTime": GTPTime,
-        "GTPRegn": GTPRegn,
-        **gitData,
-        **stackoverflowTotalQns,
-        **redditCommunities,
-        **linkedinJobs,
-        **miscJobs,
-        **stackoverflowTagsTime
-    }
+	return {
+		"req": req,
+		"GTPTime": GTPTime,
+		"GTPRegn": GTPRegn,
+		**gitData,
+		**stackoverflowTotalQns,
+		**redditCommunities,
+		**linkedinJobs,
+		**miscJobs,
+		**stackoverflowTagsTime
+	}

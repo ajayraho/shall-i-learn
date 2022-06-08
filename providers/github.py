@@ -10,16 +10,16 @@ class GitHubProvider:
       with urllib.request.urlopen("https://api.github.com/search/repositories?q=language:"+self.query) as url:
         data = json.loads(url.read().decode())
         rc = rc + data['total_count']
-    except:
-      print("Error1")
+    except Exception as e:
+      ls.update({'gitReposError': str(e)})
       rc = 0
 
     try:
       with urllib.request.urlopen("https://api.github.com/search/repositories?q="+self.query) as url:
         data = json.loads(url.read().decode())
         rc = rc + data['total_count']
-    except:
-      print("Error2")
+    except Exception as e:
+      ls.update({'gitTopicsError': str(e)})
       rc = 0
 
     ls['repos'] = rc
@@ -30,4 +30,5 @@ class GitHubProvider:
         ls['topics'] = data['total_count']
     except:
       ls['topics'] = 0
+    
     return ls
