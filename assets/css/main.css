@@ -40,6 +40,7 @@
 }
 html {font-family: 'Open Sans', sans-serif;scroll-behavior: smooth;}
 body {overflow-x: hidden;}
+section {transition: all 0.5s ease-out;}
 p, a {font-weight: 400;}
 .h2 {font-size: 40px;}
 .h3 {font-size: 28px;}
@@ -111,10 +112,12 @@ td a {
   border-radius: 5px;
   box-shadow: 9px 14px 12px -18px rgba(0, 0, 0, 0.7);
   height: fit-content;
+  transition: all 0.5s ease-out;
 }
 .silCardTitle {
   background-color: #7276ec;
   color: white;
+  border-radius: 5px 5px 0px 0px;
   font-size: 0.9rem;
 }
 .topTable {

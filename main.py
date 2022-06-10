@@ -9,6 +9,7 @@ from providers.stackoverflow import StackOverflowProvider
 from providers.reddit import RedditProvider
 from providers.linkedin import LinkedinProvider
 from providers.jobs import MiscJobsProvider
+from urllib import parse
 app = FastAPI()
 
 templates = Jinja2Templates(directory = "templates")
@@ -25,20 +26,22 @@ async def sil(info: Request):
 	GTPTime = gtprovider.getOverTime()
 	GTPRegn = gtprovider.getOverRegion()
 
-	gitprovider = GitHubProvider(req['query'])
+	urlencodedQuery = parse.quote_plus(req['query'])
+
+	gitprovider = GitHubProvider(urlencodedQuery)
 	gitData = gitprovider.getData()
 
-	stackoverflow = StackOverflowProvider(req['query'])
+	stackoverflow = StackOverflowProvider(req['query'].replace(' ','-'))
 	stackoverflowTotalQns = stackoverflow.getTotalQuestions()
 	stackoverflowTagsTime = stackoverflow.getTagsAndTimeDistribution()
 	
-	redditprovider = RedditProvider(req['query'])
+	redditprovider = RedditProvider(urlencodedQuery)
 	redditCommunities = redditprovider.getCommunities()
 	
-	linkedinprovider = LinkedinProvider(req['query'])
+	linkedinprovider = LinkedinProvider(urlencodedQuery)
 	linkedinJobs = linkedinprovider.getJobs()
 
-	miscprovider = MiscJobsProvider(req['query'])
+	miscprovider = MiscJobsProvider(urlencodedQuery)
 	miscJobs = miscprovider.getJobs()
 
 	return {

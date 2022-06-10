@@ -42,7 +42,10 @@
 		</div>
 	</div>
 
-	<section style="display:none" id="SILBody" class="container-fluid py-5 px-md-5 ml-md-5"><!--   -->
+	<section style="display:none" id="SILBody" class="container-fluid py-5 px-md-5 ml-md-5"><!--     -->
+		<div style="display:none;opacity:0;align-items:center;justify-content:center;" id="waitingBox">
+			<p style="text-align: center;font-size: 0.8rem;padding:10px 20px;border-radius:5px;background-color:#ddd;color:#000;margin-bottom:40px;width:75vw;max-width:800px;">Please be patient for 10 seconds, we are pulling data from multiple sources...<br/>Taking too long? Check your internet connection or refresh the page.</p>
+		</div>
 		<div id="errorBox" class="flex-column flex-md-row">
 			<div id="skullDiv">
 				<svg id="skull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" enable-background="new 0 0 640 640">
@@ -126,19 +129,22 @@
 						<p class="silCardTitle px-3 pt-2 pb-2">LinkedIn New Jobs</p>
 						<div class="px-3 pb-2 h3" id="linkedinnew_div"></div>
 					</div>
-					<div class="silCard mx-auto"  style="background-color:rgba(200,200,200,0.2);border-color:rgba(150,150,150,0.7);">
-						<p class="silCardTitle px-3 pt-2 pb-2" style="background-color:rgba(180,180,180,1);">indeed Jobs&nbsp;<span style="font-size: 0.5rem;"><i class='bx bxs-flask text-light' style="font-size:0.9rem"></i></span></p>
-						<div class="px-3 pb-2 h3" style="color:#777;" id="indeed_div"></div>
+					<div class="silCard mx-auto">
+						<p class="silCardTitle px-3 pt-2 pb-2">indeed Jobs</p>
+						<div class="px-3 pb-2 h3" id="indeed_div"></div>
 					</div>
-					<div class="silCard mx-auto"  style="background-color:rgba(200,200,200,0.2);border-color:rgba(150,150,150,0.7);">
-						<p class="silCardTitle px-3 pt-2 pb-2" style="background-color:rgba(180,180,180,1);">FlexJobs Jobs&nbsp;<span style="font-size: 0.5rem;"><i class='bx bxs-flask text-light' style="font-size:0.9rem"></i></span></p>
-						<div class="px-3 pb-2 h3" style="color:#777;" id="flexjobs_div"></div>
+					<div class="silCard mx-auto">
+						<p class="silCardTitle px-3 pt-2 pb-2">FlexJobs Jobs</p>
+						<div class="px-3 pb-2 h3" id="flexjobs_div"></div>
 					</div>
 					<div class="silCard mx-auto">
 						<p class="silCardTitle px-3 pt-2 pb-2">LinkedIn Jobs</p>
 						<div class="px-3 pb-2 h3" id="linkedinjobs_div"></div>
 					</div>
-
+					<!-- <div class="silCard mx-auto"  style="background-color:rgba(200,200,200,0.2);border-color:rgba(150,150,150,0.7);">
+						<p class="silCardTitle px-3 pt-2 pb-2" style="background-color:rgba(180,180,180,1);">indeed Jobs&nbsp;<span style="font-size: 0.5rem;"><i class='bx bxs-flask text-light' style="font-size:0.9rem"></i></span></p>
+						<div class="px-3 pb-2 h3" style="color:#777;" id="indeed_div"></div>
+					</div> -->
 					<div class="silCard mx-auto" style="min-width: 15rem;">
 						<p class="silCardTitle px-3 pt-2 pb-2">Reddit communities&nbsp;<span style="font-size: 0.5rem;">(related)</span></p>
 						<div class="px-3 pb-2" style="font-size:0.8rem;">

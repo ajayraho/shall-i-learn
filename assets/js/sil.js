@@ -17,7 +17,7 @@ $(window).ready(function () {
 	const SILBody = document.getElementById("SILBody")
 	const linkedinnewjobsDiv = document.getElementById("linkedinnew_div");
 	const mostUsedTagsDIV = document.getElementById("mostUsedTagsDIV");
-	const errorSVG =v=>"<abbr title=\"Error: "+v.replace(/['"]+/g, '')+"\"<i class='bx bx-error-circle' style=\"font-size:4rem;color:red;\"></i>";
+	const errorSVG =v=>"<abbr onclick='alert(\"Error: "+v.replace(/['"<>/\\]+/g, '')+"\")' title=\"Error: "+v.replace(/['"]+/g, '')+"\"><i class='bx bx-error-circle' style=\"font-size:4rem;color:red;\"></i></abbr>";
 	const turnOnLoaders = () => {
 		const loader = "<div class=\"lcon\"><div class=\"lds-ellipsis\"><div></div><div></div><div></div><div></div></div></div>";
 		linechartDiv.innerHTML = loader;
@@ -35,6 +35,8 @@ $(window).ready(function () {
 	}
 	const SHALLILEARN = async function (e) {
 		e.preventDefault();
+		$("#waitingBox").css("display", "flex").animate({opacity:1}, 750);
+
 		if(input.value != "") {
 			turnOnLoaders();
 			SILBody.style.display = "block";
@@ -43,7 +45,7 @@ $(window).ready(function () {
 			const serverURL = "https://shallilearn.herokuapp.com/sil/"
 			const localURL = "http://127.0.0.1:8000/sil/"
 			
-			await fetch(serverURL, {
+			await fetch(localURL, {
 				method: "POST",
 				headers: {
 					Accept: "application/json, text/plain, */*",
@@ -52,9 +54,13 @@ $(window).ready(function () {
 				},
 				body: JSON.stringify({ query: input.value }),
 			}).then(async (res) => {
+				$("#waitingBox").animate({opacity:0}, 500).css("display", "none");
 				if(!res.ok){
-		        throw new Error(res.statusText)         
-		     }
+	        throw new Error(res.statusText)         
+		    }
+		    if(input=="easteregg"){
+	        throw new Error("Congrats! You found an easter egg ;)")	
+		    }
 				var resp = await res.json();
 				console.log(resp)
 				google.charts.load("current", { packages: ["corechart", "geochart"] });
@@ -151,11 +157,11 @@ $(window).ready(function () {
 						var rawData = Object.keys(resp.timeDistribution).map(i=>[i,resp.timeDistribution[i]])
 						console.log("[rawData]", rawData)
 						rawData = [
-							['Minutes', rawData[0][1]],
-							['Hours', rawData[1][1]],
-							['Days', rawData[2][1]],
-							['Months', rawData[3][1]],
-							['Years', rawData[4][1]]
+							['Minutes', parseInt(rawData[0][1])],
+							['Hours', parseInt(rawData[1][1])],
+							['Days', parseInt(rawData[2][1])],
+							['Months', parseInt(rawData[3][1])],
+							['Years', parseInt(rawData[4][1])]
 						]
 						var dataArr=[]
 						for(var i=0; i<rawData.length;i++){
