@@ -172,9 +172,7 @@ $(window).ready(function () {
 					headers: headersObj,
 					body: bodyObj,
 				}).then(async (res) => {
-					$("#waitingBox").animate({ opacity: 0 }, 500).css("display", "none");
 					if(!res.ok){throw new Error(res.statusText)}
-			    
 					var resp = await res.json();
 					console.log(resp)
 
@@ -188,8 +186,9 @@ $(window).ready(function () {
 					headers: headersObj,
 					body: bodyObj,
 				}).then(async (res) => {
+					$("#waitingBox").animate({ opacity: 0 }, 500).css("display", "none");
 					if(!res.ok){throw new Error(res.statusText)}
-			    
+
 					var resp = await res.json();
 					console.log(resp)
 
