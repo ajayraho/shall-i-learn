@@ -58,7 +58,7 @@ $(window).ready(function () {
 			window.scrollTo(0, 450);
 			const serverURL = "https://shallilearn.herokuapp.com/sil/"
 			const localURL = "http://127.0.0.1:8000/sil/"
-			const useURL = localURL
+			const useURL = serverURL
 			const headersObj = {
 				"Accept": "application/json, text/plain, */*",
 				"Content-Type": "application/json",
