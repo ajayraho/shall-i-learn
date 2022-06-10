@@ -17,41 +17,55 @@ app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 @app.get("/")
 async def read_root(request: Request):
 	return templates.TemplateResponse("index.html", {"request": request})
-
-@app.post("/sil/")
-async def sil(info: Request):
+@app.post("/sil/googleTrends")
+async def googleTrends(info: Request):
 	req = await info.json()
-
 	gtprovider = GoogleTrendsPovider(req['query'])
 	GTPTime = gtprovider.getOverTime()
 	GTPRegn = gtprovider.getOverRegion()
-
-	urlencodedQuery = parse.quote_plus(req['query'])
-
-	gitprovider = GitHubProvider(urlencodedQuery)
+	return {
+		"GTPTime": GTPTime,
+		"GTPRegn": GTPRegn,
+	}
+@app.post("/sil/gitHub")
+async def gitHub(info: Request):
+	req = await info.json()
+	gitprovider = GitHubProvider(parse.quote_plus(req['query']))
 	gitData = gitprovider.getData()
-
+	return {
+		**gitData
+	}
+@app.post("/sil/stackoverflow")
+async def stackoverflow(info: Request):
+	req = await info.json()
 	stackoverflow = StackOverflowProvider(req['query'].replace(' ','-'))
 	stackoverflowTotalQns = stackoverflow.getTotalQuestions()
 	stackoverflowTagsTime = stackoverflow.getTagsAndTimeDistribution()
-	
-	redditprovider = RedditProvider(urlencodedQuery)
-	redditCommunities = redditprovider.getCommunities()
-	
-	linkedinprovider = LinkedinProvider(urlencodedQuery)
-	linkedinJobs = linkedinprovider.getJobs()
-
-	miscprovider = MiscJobsProvider(urlencodedQuery)
-	miscJobs = miscprovider.getJobs()
-
 	return {
-		"req": req,
-		"GTPTime": GTPTime,
-		"GTPRegn": GTPRegn,
-		**gitData,
 		**stackoverflowTotalQns,
-		**redditCommunities,
-		**linkedinJobs,
-		**miscJobs,
 		**stackoverflowTagsTime
+	}
+@app.post("/sil/reddit")
+async def reddit(info: Request):
+	req = await info.json()
+	redditprovider = RedditProvider(parse.quote_plus(req['query']))
+	redditCommunities = redditprovider.getCommunities()
+	return {
+		**redditCommunities
+	}
+@app.post("/sil/linkedin")
+async def linkedin(info: Request):
+	req = await info.json()
+	linkedinprovider = LinkedinProvider(parse.quote_plus(req['query']))
+	linkedinJobs = linkedinprovider.getJobs()
+	return {
+		**linkedinJobs
+	}
+@app.post("/sil/miscjobs")
+async def miscjobs(info: Request):
+	req = await info.json()
+	miscprovider = MiscJobsProvider(parse.quote_plus(req['query']))
+	miscJobs = miscprovider.getJobs()
+	return {
+		**miscJobs
 	}
