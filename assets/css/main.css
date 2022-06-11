@@ -54,8 +54,8 @@
   font-display: swap;
   src: url('../fonts/OpenSans-LightItalic.ttf')
 }
-html {font-family: 'SILFont', sans-serif;scroll-behavior: smooth;overflow-x: hidden;width: 101vw;}
-body {overflow-x: hidden;width: 101vw;}
+html {font-family: 'SILFont', sans-serif;scroll-behavior: smooth;overflow-x: hidden;width: 100vw;}
+body {overflow-x: hidden;width: 100vw;}
 section, div {transition: all 0.5s ease-out;}
 p, a {font-weight: 400;}
 .h2 {font-size: 40px;}
