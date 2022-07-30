@@ -21,12 +21,16 @@ $(window).ready(function () {
 	const SILBody = document.getElementById("SILBody")
 	const linkedinnewjobsDiv = document.getElementById("linkedinnew_div");
 	const mostUsedTagsDIV = document.getElementById("mostUsedTagsDIV");
+	const timeDistQuestionCount = document.getElementById("timeDistQuestionCount");
+	const logsModal = document.getElementById("logsModal");
 	let errorCount = 0;
+	let exceptionOccurred = false;
 	const errorSVG =v=>{
 		errorCount++;
 		return "<abbr onclick='alert(\"Error: "+v.replace(/['"<>/\\]+/g, '')+"\")' title=\"Error: "+v.replace(/['"]+/g, '')+"\"><i class='bx bx-error-circle' style=\"font-size:4rem;color:red;\"></i></abbr>";
 	}
 	const turnOnLoaders = () => {
+		exceptionOccurred = false;
 		const loader = "<div class=\"lcon\"><div class=\"lds-ellipsis\"><div></div><div></div><div></div><div></div></div></div>";
 		linechartDiv.innerHTML = loader;
 		regionschartDiv.innerHTML = loader;
@@ -41,8 +45,8 @@ $(window).ready(function () {
 		tagsChartDiv.innerHTML = loader;
 		timeDistributionDiv.innerHTML = loader;
 	}
-	let exceptionOccurred = false;
 	const errorHandler = (err) => {
+		updateLog(err+"<br/>")
 		if(!exceptionOccurred){
 			$("#waitingBox").animate({ opacity: 0 }, 500).css("display", "none");
 			$("#SILBody").children().fadeOut(500).promise().done(function(){
@@ -51,23 +55,41 @@ $(window).ready(function () {
 				jQuery.easing.def = 'easeOutBounce';
 				$("#errorBox").animate({opacity:1}, 500);
 				$(button).attr("disabled", "true")
+				$("#silInput").attr('value','Reload page :)').attr("disabled", "true")
 			})
 			exceptionOccurred = true;
 		}
+	}
+	const updateLog = (log) => {
+		if(log != undefined){
+			logsModal.innerHTML+=log
+		} else {
+			logsModal.innerHTML+="Something unexpected happened.<br/>"
+		}
+		logsModal.scrollTop = logsModal.scrollHeight;
 	}
 	const SHALLILEARN = function (e) {
 		e.preventDefault();
 		$("#waitingBox").css("display", "flex").animate({opacity:1}, 750);
 		$("#technicalTermBox").css({"display":"none", "opacity":0});
+		
+		var logModalVisible = false;
+		
+		logsModal.innerHTML = "Welcome to shallILearn<br/>"
+		$(".logButton").css("display", "inline-block").click(function () {
+			$(this).toggleClass('logButtonActive')
+			!logModalVisible ? $(".logsModal").css("display", "inline-block").animate({ opacity: 1 }, 250) : $(".logsModal").animate({ opacity: 0 }, 250).css("display", "none");
+			logModalVisible = !logModalVisible
+		})
 
-		if(input.value != "" && input.value!="easteregg") {
+		if(input.value.trim() != "" && input.value.trim()!="easteregg") {
 			turnOnLoaders();
 			SILBody.style.display = "block";
 			
 			window.scrollTo(0, 450);
 			const serverURL = "https://shallilearn.herokuapp.com/sil/"
 			const localURL = "http://127.0.0.1:8000/sil/"
-			const useURL = localURL
+			const useURL = serverURL
 			const headersObj = {
 				"Accept": "application/json, text/plain, */*",
 				"Content-Type": "application/json",
@@ -84,7 +106,6 @@ $(window).ready(function () {
 					body: bodyObj,
 				}).then(async (res) => {
 					if(!res.ok){throw new Error(res.statusText)}
-
 					var resp = await res.json();
 					function drawChart() {
 						var arr = resp.GTPTime.map((i) => [new Date(new Date(i[0]).toDateString()),i[1],]);
@@ -125,7 +146,7 @@ $(window).ready(function () {
 					drawRegionsMap();
 				}).catch(err=>{errorHandler(err)});
 
-				await fetch(useURL+"gitHub", {
+				!exceptionOccurred&&await fetch(useURL+"gitHub", {
 					method: "POST",
 					headers: headersObj,
 					body: bodyObj,
@@ -133,12 +154,13 @@ $(window).ready(function () {
 					if(!res.ok){throw new Error(res.statusText)}
 			    
 					var resp = await res.json();
+					updateLog(resp.logs);
 
 					gitReposDiv.innerHTML = resp.hasOwnProperty("gitReposError") ? errorSVG(resp.gitReposError) : "<abbr title='"+resp.repos+"'>"+SILUtilAbbreviate(resp.repos)+"</abbr>";
 					gitTopicsDiv.innerHTML = resp.hasOwnProperty("gitTopicsError") ? errorSVG(resp.gitTopicsError) : "<abbr title='"+resp.topics+"'>"+SILUtilAbbreviate(resp.topics)+"</abbr>";
 				}).catch(err=>{!exceptionOccurred&&errorHandler(err)});
 
-				await fetch(useURL+"reddit", {
+				!exceptionOccurred&&await fetch(useURL+"reddit", {
 					method: "POST",
 					headers: headersObj,
 					body: bodyObj,
@@ -146,7 +168,8 @@ $(window).ready(function () {
 					if(!res.ok){throw new Error(res.statusText)}
 			    
 					var resp = await res.json();
-			
+					updateLog(resp.logs);
+
 					if(!resp.hasOwnProperty('redditError')){
 						var reddithtml="";
 						for(let i=0; i<resp.communities.length; i++){
@@ -159,7 +182,7 @@ $(window).ready(function () {
 					}
 				}).catch(err=>{!exceptionOccurred&&errorHandler(err)});
 				
-				await fetch(useURL+"linkedin", {
+				!exceptionOccurred &&await fetch(useURL+"linkedin", {
 					method: "POST",
 					headers: headersObj,
 					body: bodyObj,
@@ -167,32 +190,36 @@ $(window).ready(function () {
 					if(!res.ok){throw new Error(res.statusText)}
 			    
 					var resp = await res.json();
+					updateLog(resp.logs);
+
 					linkedinjobsDiv.innerHTML = resp.hasOwnProperty("linkedinError") ? errorSVG(resp.linkedinError) : "<abbr title='"+resp.liJobs+"'>"+SILUtilAbbreviate(resp.liJobs)+"</abbr>";
 					linkedinnewjobsDiv.innerHTML = resp.hasOwnProperty("linkedinError") ? errorSVG(resp.linkedinError) : "<abbr title='"+resp.liNewJobs+"'>"+SILUtilAbbreviate(resp.liNewJobs)+"</abbr>";
 				}).catch(err=>{!exceptionOccurred&&errorHandler(err)});
 				
-				await fetch(useURL+"miscjobs", {
+				!exceptionOccurred &&await fetch(useURL+"miscjobs", {
 					method: "POST",
 					headers: headersObj,
 					body: bodyObj,
 				}).then(async (res) => {
 					if(!res.ok){throw new Error(res.statusText)}
 					var resp = await res.json();
+					updateLog(resp.logs);
 
 					indeedjobsDiv.innerHTML = resp.hasOwnProperty("indeedJobsError") ? errorSVG(resp.indeedJobsError) : "<abbr title='"+resp.indeedJobs+"'>"+SILUtilAbbreviate(resp.indeedJobs)+"</abbr>";
 					
 					flexjobsDiv.innerHTML = resp.hasOwnProperty("flexJobsError") ? errorSVG(resp.flexJobsError) : "<abbr title='"+resp.flexJobs+"'>"+SILUtilAbbreviate(resp.flexJobs)+"</abbr>";
 				}).catch(err=>{!exceptionOccurred&&errorHandler(err)});
 
-				await fetch(useURL+"stackoverflow", {
+				!exceptionOccurred&&await fetch(useURL+"stackoverflow", {
 					method: "POST",
 					headers: headersObj,
 					body: bodyObj,
 				}).then(async (res) => {
 					$("#waitingBox").animate({ opacity: 0 }, 500).css("display", "none");
 					if(!res.ok){throw new Error(res.statusText)}
-
+					
 					var resp = await res.json();
+					updateLog(resp.logs);
 
 					stackoverflowQuestionsDiv.innerHTML = "<abbr title='"+resp.questionsCount+"'>"+SILUtilAbbreviate(resp.questionsCount)+"</abbr>";
 					
@@ -236,6 +263,8 @@ $(window).ready(function () {
 
 					function drawTimeDistrubutionBarChart() {
 						if(!resp.hasOwnProperty('stackoverflowTagTimeError')){
+							timeDistQuestionCount.innerHTML = "first " + SILUtilAbbreviate(parseInt(resp.qpages) *50)+" questions"
+
 							var rawData = Object.keys(resp.timeDistribution).map(i=>[i,resp.timeDistribution[i]])
 							rawData = [
 								['Minutes', parseInt(rawData[0][1])],
@@ -288,7 +317,7 @@ $(window).ready(function () {
 					}
 					tagsLegends.innerHTML=tagsHTML
 
-					if(errorCount>=2){
+					if(errorCount>=3){
 						$("#technicalTermBox").css("display", "flex").animate({opacity:1}, 750);
 					}
 				}).catch(err=>{!exceptionOccurred&&errorHandler(err)});

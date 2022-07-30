@@ -14,6 +14,17 @@ app = FastAPI()
 
 templates = Jinja2Templates(directory = "templates")
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+
+def formatQuery(query):
+	query = query.replace(' ', '-')
+	if query.endswith('css') and query[-4] != '-':
+		query = query[:-3]
+		query = query+'-css'
+	if query.endswith('js') and query[-3] != '-':
+		query = query[:-2]
+		query = query+'-js'
+	return query
+
 @app.get("/")
 async def read_root(request: Request):
 	return templates.TemplateResponse("index.html", {"request": request})
@@ -30,7 +41,7 @@ async def googleTrends(info: Request):
 @app.post("/sil/gitHub")
 async def gitHub(info: Request):
 	req = await info.json()
-	gitprovider = GitHubProvider(parse.quote_plus(req['query']))
+	gitprovider = GitHubProvider(formatQuery(req['query']))
 	gitData = gitprovider.getData()
 	return {
 		**gitData
@@ -38,7 +49,8 @@ async def gitHub(info: Request):
 @app.post("/sil/stackoverflow")
 async def stackoverflow(info: Request):
 	req = await info.json()
-	stackoverflow = StackOverflowProvider(req['query'].replace(' ','-'))
+	query = formatQuery(req['query'])
+	stackoverflow = StackOverflowProvider(query)
 	stackoverflowTotalQns = stackoverflow.getTotalQuestions()
 	stackoverflowTagsTime = stackoverflow.getTagsAndTimeDistribution()
 	return {
@@ -56,7 +68,7 @@ async def reddit(info: Request):
 @app.post("/sil/linkedin")
 async def linkedin(info: Request):
 	req = await info.json()
-	linkedinprovider = LinkedinProvider(parse.quote_plus(req['query']))
+	linkedinprovider = LinkedinProvider(formatQuery(req['query']))
 	linkedinJobs = linkedinprovider.getJobs()
 	return {
 		**linkedinJobs
@@ -64,7 +76,7 @@ async def linkedin(info: Request):
 @app.post("/sil/miscjobs")
 async def miscjobs(info: Request):
 	req = await info.json()
-	miscprovider = MiscJobsProvider(parse.quote_plus(req['query']))
+	miscprovider = MiscJobsProvider(formatQuery(req['query']))
 	miscJobs = miscprovider.getJobs()
 	return {
 		**miscJobs

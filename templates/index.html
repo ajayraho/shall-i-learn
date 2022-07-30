@@ -104,7 +104,7 @@
 						</div>
 					</div>
 				<div class="d-md-flex align-items-start w-100 w-md-75 mt-5">
-					<h5>Questions asked within time on Stackoverflow &nbsp;<span style="font-size: 0.5rem;">(first 3k questions)</span></h5>
+					<h5>Questions asked within time on Stackoverflow &nbsp;<span style="font-size: 0.5rem;">(<span id="timeDistQuestionCount">question count depends on internet connection</span>)</span></h5>
 				</div>
 				<div class="row" style="width: 300px; height: 300px;">
 					<div id="timeDistribution_div" style="width: 300px; height: 200px;"></div>
@@ -129,9 +129,9 @@
 						<p class="silCardTitle px-3 pt-2 pb-2">LinkedIn New Jobs</p>
 						<div class="px-3 pb-2 h3" id="linkedinnew_div"></div>
 					</div>
-					<div class="silCard mx-auto">
-						<p class="silCardTitle px-3 pt-2 pb-2">indeed Jobs</p>
-						<div class="px-3 pb-2 h3" id="indeed_div"></div>
+					<div class="silCard mx-auto" style="background-color:rgba(200,200,200,0.2);border-color:rgba(150,150,150,0.7);">
+						<p class="silCardTitle px-3 pt-2 pb-2" style="background-color:rgba(180,180,180,1);">indeed Jobs&nbsp;<span style="font-size: 0.5rem;"><i class='bx bxs-flask text-light' style="font-size:0.9rem"></i></span></p>
+						<div class="px-3 pb-2 h3" style="color:#777;" id="indeed_div"></div>
 					</div>
 					<div class="silCard mx-auto">
 						<p class="silCardTitle px-3 pt-2 pb-2">FlexJobs Jobs</p>
@@ -166,10 +166,18 @@
 			</div>
 		</div>
 		<div class="row" style="display:none;opacity:0;align-items:center;justify-content:center;" id="technicalTermBox">
-			<p style="text-align: center;font-size: 0.8rem;padding:10px 20px;border-radius:5px;background-color:#ddd;color:#000;margin-top:20px;margin-bottom:20px;width:75vw;max-width:400px;">It seems that there is not much relevant data to show. Are you sure you entered a technical term related to computer programming?</p>
+			<p style="text-align: center;font-size: 0.8rem;padding:10px 20px;border-radius:5px;background-color:#ddd;color:#000;margin-top:20px;margin-bottom:20px;width:75vw;max-width:400px;">It seems that there is not much relevant data to show. This could happen due to weak internet connection, inavailability of the server or if the entered input is not a technical term related to computer programming. Retry.</p>
 		</div>
+		
 	</section>
+<div class="logButton">
+<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20">
+	<path d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 21h18v-2H3v2zM3 8v8l4-4-4-4zm8 9h10v-2H11v2zM3 3v2h18V3H3zm8 6h10V7H11v2zm0 4h10v-2H11v2z" />
+</svg>
 
+</div>
+<div class="logsModal" id="logsModal"></div>
 	<footer class="bg-secondary pt-2">
 		<div class="container">
 			<div class="row py-4">
