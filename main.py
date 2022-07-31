@@ -17,6 +17,7 @@ app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 
 def formatQuery(query):
 	query = query.replace(' ', '-')
+	query = query.replace('.', '-')
 	if query.endswith('css') and query[-4] != '-':
 		query = query[:-3]
 		query = query+'-css'

@@ -10,7 +10,7 @@ class GitHubProvider:
     self.logs += "Initiating data fetch sequence...<br/>"
     try:
       self.logs += "Fetching repositories count 1/2...<br/>"
-      with urllib.request.urlopen("https://api.github.com/search/repositories?q=language:"+self.query) as url:
+      with urllib.request.urlopen("https://api.github.com/search/repositories?q=language:"+self.query,timeout=5) as url:
         data = json.loads(url.read().decode())
         self.logs += "Fetched repositories count.<br/>"
         rc = data['total_count']
@@ -20,7 +20,7 @@ class GitHubProvider:
 
     try:
       self.logs += "Fetching repositories count 2/2...<br/>"
-      with urllib.request.urlopen("https://api.github.com/search/repositories?q="+self.query) as url:
+      with urllib.request.urlopen("https://api.github.com/search/repositories?q="+self.query,timeout=5) as url:
         data = json.loads(url.read().decode())
         self.logs += "Fetched repositories count.<br/>"
         rc = rc + data['total_count']
@@ -32,7 +32,7 @@ class GitHubProvider:
 
     try:
       self.logs += "Fetching topics count...<br/>"
-      with urllib.request.urlopen("https://api.github.com/search/topics?q="+self.query) as url:
+      with urllib.request.urlopen("https://api.github.com/search/topics?q="+self.query,timeout=5) as url:
         self.logs += "Fetched topics.<br/>"
         data = json.loads(url.read().decode())
         ls['topics'] = data['total_count']

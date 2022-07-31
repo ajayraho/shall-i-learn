@@ -8,7 +8,8 @@ class RedditProvider:
   def getCommunities(self):
     try:
       self.logs += "Fetching data...<br/>"
-      req=requests.get(url='https://www.reddit.com/search/?q={}&type=sr'.format(self.query))
+      req = requests.get(
+          url='https://www.reddit.com/search/?q={}&type=sr'.format(self.query), timeout=5)
       self.logs += "Processing...<br/>"
       soup=BeautifulSoup(req.text,"html.parser")
       nq=soup.find_all("h6",class_="_2torGbn_fNOMbGw3UAasPl")

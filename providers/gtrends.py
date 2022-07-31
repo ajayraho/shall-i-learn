@@ -6,7 +6,7 @@ class GoogleTrendsPovider:
   def __init__(self, query):
     self.query = query
   def getOverTime(self):
-    pytrend = TrendReq()
+    pytrend = TrendReq(timeout=(5, 20))
     pytrend.build_payload(kw_list=[self.query])
     df = pytrend.interest_over_time()
     df = df.drop('isPartial', axis=1)

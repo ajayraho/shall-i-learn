@@ -11,7 +11,7 @@ class LinkedinProvider:
     html=""
     try:
       self.logs += "Fetching LinkedIn jobs...<br/>"
-      req=requests.get(url='https://www.linkedin.com/jobs/search?keywords={}&location=&geoId=&trk=homepage-jobseeker_jobs-search-bar_search-submit&position=1&pageNum=0'.format(self.query))
+      req=requests.get(url='https://www.linkedin.com/jobs/search?keywords={}&location=&geoId=&trk=homepage-jobseeker_jobs-search-bar_search-submit&position=1&pageNum=0'.format(self.query),timeout=5)
       self.logs += "Processing...<br/>"
       soup=BeautifulSoup(req.text,"html.parser")
       html=req.text

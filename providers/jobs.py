@@ -12,7 +12,7 @@ class MiscJobsProvider:
 		self.logs += "Initiating data fetch sequence...<br/>"
 		try:
 			self.logs += "Fetching indeed jobs...<br/>"
-			req=requests.get(url='https://indeed.com/jobs?q={}&l&from=searchOnHP&vjk=b6a83fffa19901da'.format(self.query))
+			req=requests.get(url='https://indeed.com/jobs?q={}&l&from=searchOnHP&vjk=b6a83fffa19901da'.format(self.query),timeout=5)
 			self.logs += "Processing...<br/>"
 			soup=BeautifulSoup(req.text,"html.parser")
 			jc=soup.find("div",attrs={"id":"searchCountPages"})
@@ -25,7 +25,7 @@ class MiscJobsProvider:
 
 		try:
 			self.logs += "Fetching FlexJobs jobs...<br/>"
-			req1 = requests.get(url="https://www.flexjobs.com/search?search={}&location=".format(self.query))
+			req1 = requests.get(url="https://www.flexjobs.com/search?search={}&location=".format(self.query),timeout=5)
 			self.logs += "Processing...<br/>"
 			dom = etree.HTML(req1.text)			
 			response.update({'flexJobs':''.join(filter(str.isdigit,dom.xpath('//*[@id="content-main"]/div[2]/div/div/div[1]/div[2]/div[1]/h4')[0].text.strip().split()[4]))})		

@@ -11,7 +11,7 @@ class StackOverflowProvider:
 	def getTotalQuestions(self):
 		try:
 			self.logs += "Fetching total questions count...<br/>"
-			req=requests.get(url='https://stackoverflow.com/questions/tagged/'+self.query)
+			req=requests.get(url='https://stackoverflow.com/questions/tagged/'+self.query,timeout=5)
 			self.logs += "Processing...<br/>"
 			soup=BeautifulSoup(req.text,"html.parser")
 			nq=soup.find_all("div",class_="fs-body3 flex--item fl1 mr12 sm:mr0 sm:mb12")
@@ -37,7 +37,7 @@ class StackOverflowProvider:
 				self.logs += f"Batch {count}/{rangevar-1}: "
 				try:
 					self.logs += " Fetching... "
-					req=requests.get(url='https://stackoverflow.com/questions/tagged/{}?tab=active&page={}&pagesize=50'.format(self.query,page))
+					req=requests.get(url='https://stackoverflow.com/questions/tagged/{}?tab=active&page={}&pagesize=50'.format(self.query,page), timeout=5)
 					self.logs += " Processing... "
 					soup=BeautifulSoup(req.text,"html.parser")
 					nq=soup.find_all("div",class_="s-post-summary--meta")
@@ -49,7 +49,8 @@ class StackOverflowProvider:
 						tar+=tm
 					self.logs += " Done.<br/>"
 				except Exception as e:
-					self.logs += f"Batch {count}/{rangevar-1} failed. <i>{e}</i><br/>Continuing with data obtained so far.<br/>"
+					self.logs += f"Failed. <i>{e}</i><br/>Continuing with data obtained so far.<br/>"
+					break
 			self.logs += "Processing data...<br/>"
 			currYr = date.today().year
 			yrs = [str(currYr-i) for i in range(1, 100) if currYr-i>2007] #WORKS UNTIL YEAR 3022 :)
@@ -78,7 +79,7 @@ class StackOverflowProvider:
 
 			self.logs += "Done.<br/>"
 			self.logs += "StackoverflowProvider data fetch sequence finished.<br/><b>Finished.</b>"
-			return {"timeDistribution": tdic, "tags": ms, "logs": self.logs, "qpages": rangevar}
+			return {"timeDistribution": tdic, "tags": ms, "logs": self.logs, "qpages": count}
 		except Exception as e:
 			self.logs += f"Error while fetching tags and time distribution of questions. <i>{e}</i><br/><b>Finished.</b>"
 			return {"timeDistribution": {}, "tags": [], "stackoverflowTagTimeError": str(e), "logs":self.logs}

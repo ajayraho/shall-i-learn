@@ -45,9 +45,9 @@ $(window).ready(function () {
 		tagsChartDiv.innerHTML = loader;
 		timeDistributionDiv.innerHTML = loader;
 	}
-	const errorHandler = (err) => {
+	const errorHandler = (err, flipPage=true, needsUpdateSet=null) => {
 		updateLog(err+"<br/>")
-		if(!exceptionOccurred){
+		if(!exceptionOccurred && flipPage){
 			$("#waitingBox").animate({ opacity: 0 }, 500).css("display", "none");
 			$("#SILBody").children().fadeOut(500).promise().done(function(){
 				$("#errorBox #errTxt").html(err);
@@ -58,6 +58,13 @@ $(window).ready(function () {
 				$("#silInput").attr('value','Reload page :)').attr("disabled", "true")
 			})
 			exceptionOccurred = true;
+		}
+		if(!flipPage){
+			updateLog("Fatal error ignored.<br/>")
+			for(let i=0; i<needsUpdateSet.length; i++){
+				needsUpdateSet[i].innerHTML = errorSVG("Something went wrong");
+			}
+
 		}
 	}
 	const updateLog = (log) => {
@@ -194,7 +201,7 @@ $(window).ready(function () {
 
 					linkedinjobsDiv.innerHTML = resp.hasOwnProperty("linkedinError") ? errorSVG(resp.linkedinError) : "<abbr title='"+resp.liJobs+"'>"+SILUtilAbbreviate(resp.liJobs)+"</abbr>";
 					linkedinnewjobsDiv.innerHTML = resp.hasOwnProperty("linkedinError") ? errorSVG(resp.linkedinError) : "<abbr title='"+resp.liNewJobs+"'>"+SILUtilAbbreviate(resp.liNewJobs)+"</abbr>";
-				}).catch(err=>{!exceptionOccurred&&errorHandler(err)});
+				}).catch(err=>{!exceptionOccurred&&errorHandler(err,false,[linkedinjobsDiv,linkedinnewjobsDiv])});
 				
 				!exceptionOccurred &&await fetch(useURL+"miscjobs", {
 					method: "POST",
@@ -263,7 +270,7 @@ $(window).ready(function () {
 
 					function drawTimeDistrubutionBarChart() {
 						if(!resp.hasOwnProperty('stackoverflowTagTimeError')){
-							timeDistQuestionCount.innerHTML = "first " + SILUtilAbbreviate(parseInt(resp.qpages) *50)+" questions"
+							timeDistQuestionCount.innerHTML = "first <abbr title='" + parseInt(resp.qpages) * 50 +"' >"+SILUtilAbbreviate(parseInt(resp.qpages) *50)+"</abbr> questions"
 
 							var rawData = Object.keys(resp.timeDistribution).map(i=>[i,resp.timeDistribution[i]])
 							rawData = [
