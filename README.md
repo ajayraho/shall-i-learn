@@ -36,26 +36,25 @@
 
 ### Normal Flow
 <div align="center">
-  <video width="100%" controls src="assets/readme/demo_lg.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+
+https://github.com/ajayraho/shall-i-learn/assets/readme/demo_lg.mp4
+
 </div>
 
 ### Error Handling
 <div align="center">
-  <video width="100%" controls src="assets/readme/demoerr_lg.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+
+https://github.com/ajayraho/shall-i-learn/assets/readme/demoerr_lg.mp4
+
 </div>
 
 
 ### Mobile device
 <div align="center">
-  <video width="40%" controls src="assets/readme/demo_sm.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
 
+https://github.com/ajayraho/shall-i-learn/assets/readme/demo_sm.mp4
+
+</div>
 
 ## Features
 
