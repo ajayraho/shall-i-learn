@@ -37,14 +37,14 @@
 ### Normal Flow
 <div align="center">
 
-https://github.com/ajayraho/shall-i-learn/assets/readme/demo_lg.mp4
+<img src="assets/readme/demo_lg.gif" width="1000"/>
 
 </div>
 
 ### Error Handling
 <div align="center">
 
-https://github.com/ajayraho/shall-i-learn/assets/readme/demoerr_lg.mp4
+<img src="assets/readme/demoerr_lg.gif" width="1000"/>
 
 </div>
 
@@ -52,7 +52,7 @@ https://github.com/ajayraho/shall-i-learn/assets/readme/demoerr_lg.mp4
 ### Mobile device
 <div align="center">
 
-https://github.com/ajayraho/shall-i-learn/assets/readme/demo_sm.mp4
+<img src="assets/readme/demo_sm.gif" width="300"/>
 
 </div>
 
