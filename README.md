@@ -36,16 +36,14 @@
 
 ### Normal Flow
 <div align="center">
-  <video width="100%" controls>
-    <source src="assets/readme/demo_lg.mp4" type="video/mp4">
+  <video width="100%" controls src="assets/readme/demo_lg.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>
 
 ### Error Handling
 <div align="center">
-  <video width="100%" controls>
-    <source src="assets/readme/demoerr_lg.mp4" type="video/mp4">
+  <video width="100%" controls src="assets/readme/demoerr_lg.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>
@@ -53,8 +51,7 @@
 
 ### Mobile device
 <div align="center">
-  <video width="40%" controls>
-    <source src="assets/readme/demo_sm.mp4" type="video/mp4">
+  <video width="40%" controls src="assets/readme/demo_sm.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>
